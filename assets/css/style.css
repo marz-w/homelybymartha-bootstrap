@@ -47,6 +47,27 @@
   margin-top: 4px;
 }
 
+/* ============================================================
+   RESPONSIVE HEADER — prevent logo+nav wrapping
+   ============================================================ */
+
+/* 1. Never let the header row wrap */
+.header .container-fluid {
+  flex-wrap: nowrap !important;
+}
+
+/* 2. Shrink nav item padding on medium laptops (992–1199px) so all 6
+      links stay on one line without colliding with the logo */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .header .logo h1 {
+    font-size: 22px;
+  }
+  .sitename .brand-by {
+    font-size: 0.42em;
+  }
+}
+
+/* 3. Extra small phones */
 @media (max-width: 575px) {
   .header .logo h1 {
     font-size: 22px;
@@ -54,6 +75,70 @@
   .sitename .brand-by {
     font-size: 0.44em;
   }
+}
+
+/* ============================================================
+   MID-BREAKPOINT NAV FIX (992px–1199px)
+   Bootstrap xl = 1200px; our nav CSS kicks in at 1200px.
+   Between 992–1199px the hamburger still shows (d-xl-none)
+   but the desktop nav links also display — causing both to appear.
+   Fix: hide the hamburger and show a compact horizontal nav.
+   ============================================================ */
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* Hide the hamburger icon on medium+ screens */
+  .mobile-nav-toggle {
+    display: none !important;
+  }
+
+  /* Show nav as compact horizontal row */
+  .navmenu ul {
+    display: flex !important;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .navmenu > ul > li {
+    padding: 10px 8px;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .navmenu a,
+  .navmenu a:focus {
+    color: var(--nav-color, #444444);
+    font-size: 14px;
+    padding: 0 2px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .navmenu a:hover,
+  .navmenu .active {
+    color: #0F9D8A;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE HERO TYPOGRAPHY — never overflow any viewport
+   ============================================================ */
+
+/* Hero h2: scales fluidly from ~1.6rem (mobile) to 2.8rem (desktop) */
+.hero h2 {
+  font-size: clamp(1.6rem, 4.5vw, 2.8rem) !important;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+/* Hero lead text also scales */
+.hero p.lead-text {
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
 }
 
 /* Hero Carousel Customization */
@@ -122,7 +207,6 @@
 }
 
 .hero h2 {
-  font-size: 2.8rem;
   font-weight: 800;
   color: #ffffff;
   margin-bottom: 1rem;
@@ -130,11 +214,11 @@
 }
 
 .hero p.lead-text {
-  font-size: 1.2rem;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 2rem;
   max-width: 720px;
 }
+
 
 .btn-get-started,
 .btn-primary-custom {
